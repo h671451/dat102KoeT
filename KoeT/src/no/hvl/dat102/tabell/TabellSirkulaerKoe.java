@@ -30,7 +30,8 @@ public class TabellSirkulaerKoe<T> implements KoeADT<T> {
 	public void innKoe(T element) {
 		if (foran == ((bak + 2) % koe.length))
 			utvid();
-		//Fyll ut
+		bak = (bak + 1) % koe.length;
+		koe[bak] = element;
 
 	}
 
@@ -38,8 +39,10 @@ public class TabellSirkulaerKoe<T> implements KoeADT<T> {
 		if (erTom())
 			throw new EmptyCollectionException("koe");
 
-		//Fyll ut
-		return null;//Midletidig
+		T resultat = koe[foran];
+		koe[foran] = null;
+		foran = (foran + 1) % koe.length;
+		return resultat;
 	}
 
 	public T foerste() {
