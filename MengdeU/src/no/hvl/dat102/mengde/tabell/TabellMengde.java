@@ -111,8 +111,8 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	
 	/*
 	 * Når vi overkjører (override) equals- meteoden er det anbefalt at vi også
-	 * overkjører hascode-metoden da en del biblioterker burker hascode sammen med
-	 * equals. Vi kommer tilbake til forklaring og bruk av hascode senere i faget.
+	 * overkjører hashcode-metoden da en del biblioterker brker hashcode sammen med
+	 * equals. Vi kommer tilbake til forklaring og bruk av hashcode senere i faget.
 	 */
 	@Override
 	public int hashCode() {
