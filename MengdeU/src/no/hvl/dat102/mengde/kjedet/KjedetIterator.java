@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 /**
  * @author ole olsen
  * 
-  */
+ */
 
 public class KjedetIterator<T> implements Iterator<T> {
 	private LinearNode<T> aktuell; // den aktuelle posisjonen.
@@ -29,7 +29,7 @@ public class KjedetIterator<T> implements Iterator<T> {
 	/************************************************************
 	 * Returnerer sann hvis iteratoren har minst ett element igjen.
 	 *************************************************************/
-		
+
 	@Override
 	public boolean hasNext() {
 		return (aktuell != null);
@@ -46,7 +46,7 @@ public class KjedetIterator<T> implements Iterator<T> {
 			throw new NoSuchElementException();
 		resultat = aktuell.getElement();
 		aktuell = aktuell.getNeste();
-		
+
 		return resultat;
 	}
 
@@ -55,7 +55,7 @@ public class KjedetIterator<T> implements Iterator<T> {
 	 *************************************************************/
 	@Override
 	public void remove() {
-		System.out.println("Denne er ikke implementert.");
+		throw new UnsupportedOperationException("Denne er ikke implementert");
 	}
 
 }
