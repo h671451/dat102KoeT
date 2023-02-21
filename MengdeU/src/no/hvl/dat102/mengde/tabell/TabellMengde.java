@@ -226,4 +226,11 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		antall++;
 	}
 
+	@Override
+	public String toString() {
+		return "TabellMengde [antall=" + antall + ", tab=" + Arrays.toString(tab) + "]";
+	}
+	
+	
+
 }// class

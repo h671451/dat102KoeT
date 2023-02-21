@@ -62,8 +62,16 @@ public abstract class MengdeAdtTest {
 		  assertTrue(differens.inneholder(1));
 		  assertTrue(differens.inneholder(2));
 		  assertTrue(differens.inneholder(3));
+		  assertFalse(differens.inneholder(4));
+		  assertFalse(differens.inneholder(5));
+
   
 	  }
+	@Test
+	public MengdeADT<Integer> reset() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	  
 	  
 	
