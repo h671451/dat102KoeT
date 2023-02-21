@@ -78,7 +78,7 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	@Override
 	public T fjern(T element) {
 
-		// Søker etter og fjerner element. Returnerer null-ref ved ikke-funn
+		// Sï¿½ker etter og fjerner element. Returnerer null-ref ved ikke-funn
 
 		if (erTom())
 			throw new EmptyCollectionException("mengde");
@@ -110,8 +110,8 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	}
 
 	/*
-	 * Når vi overkjører (override) equals- meteoden er det anbefalt at vi også
-	 * overkjører hashcode-metoden da en del biblioterker brker hashcode sammen med
+	 * Nï¿½r vi overkjï¿½rer (override) equals- meteoden er det anbefalt at vi ogsï¿½
+	 * overkjï¿½rer hashcode-metoden da en del biblioterker brker hashcode sammen med
 	 * equals. Vi kommer tilbake til forklaring og bruk av hashcode senere i faget.
 	 */
 	@Override
@@ -152,6 +152,14 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	public MengdeADT<T> snitt(MengdeADT<T> m2) {
 		MengdeADT<T> snittM = new TabellMengde<T>();
 		T element = null;
+		 Iterator<T> teller = m2.iterator();
+		 
+		 while(teller.hasNext()) {
+			 if(this.inneholder(element)) {
+				 snittM.leggTil(element);
+			 }
+		 }		
+		
 		/*
 		 * ...Fyll ut senere
 		 */
@@ -162,6 +170,20 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	public MengdeADT<T> differens(MengdeADT<T> m2) {
 		MengdeADT<T> differensM = new TabellMengde<T>();
 		T element;
+		
+	    Iterator<T> teller = iterator(); // teller er 'this'mengden
+	    
+	    while(teller.hasNext()) {
+	    	element = teller.next();
+	    	
+	    	if (!m2.inneholder(element)) {
+	    		((TabellMengde<T>) differensM).settInn(element);
+	    	}
+	    }
+		
+
+		
+		
 		/*
 		 * Fyll ut senere
 		 * 
@@ -174,7 +196,20 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	@Override
 	public boolean undermengde(MengdeADT<T> m2) {
 		boolean erUnderMengde = true;
+		T element = null;
 		// ...Fyll ut senere
+		if(antall > m2.antall()) {
+			return false;
+		}
+		
+		Iterator<T> oppramser = iterator();
+		while (oppramser.hasNext() && erUnderMengde) {
+			element = oppramser.next();
+			if (!m2.inneholder(element)) {
+				erUnderMengde = false;
+			}
+		}
+		
 		return false;
 	}
 

@@ -8,6 +8,7 @@ import java.util.Random;
 
 import no.hvl.dat102.exception.EmptyCollectionException;
 import no.hvl.dat102.mengde.adt.MengdeADT;
+import no.hvl.dat102.mengde.tabell.TabellMengde;
 
 public class KjedetMengde<T> implements MengdeADT<T> {
 	private static Random rand = new Random();
@@ -68,7 +69,7 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 	}//
 
 	@Override
-	public T fjern(T element) { //Denne skal vi se på litt senere
+	public T fjern(T element) { //Denne skal vi se pï¿½ litt senere
 
 		if (erTom())
 			throw new EmptyCollectionException("mengde");
@@ -80,7 +81,7 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 			resultat = start.getElement();
 			start = start.getNeste();
 			antall--;
-		} else {// Gjennomgår den kjedete strukturen
+		} else {// Gjennomgï¿½r den kjedete strukturen
 			forgjenger = start;
 			aktuell = start.getNeste();
 			for (int sok = 2; sok <= antall && !funnet; sok++) {
@@ -115,8 +116,8 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 		return funnet;
 	}
 	/*
-	 * Når vi overkjører (override) equals- meteoden er det anbefalt at vi også
-	 * overkjører hashcode-metoden da en del biblioteker bruker hascode sammen med
+	 * Nï¿½r vi overkjï¿½rer (override) equals- meteoden er det anbefalt at vi ogsï¿½
+	 * overkjï¿½rer hashcode-metoden da en del biblioteker bruker hascode sammen med
 	 * equals. Vi kommer tilbake til forklaring og bruk av hashcode senere i faget.
 	 */
 
@@ -128,30 +129,36 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 		result = prime * result + ((start == null) ? 0 : start.hashCode());
 		return result;
 	}
+	
+	
 
 	@Override
 	public boolean equals(Object ny) {
 
-		if (this == ny) {
-			return true;
-		}
-		if (ny == null) {
-			return false;
-		}
-		if (getClass() != ny.getClass()) {
-			return false;
-		}
-		boolean likeMengder = true;
-		MengdeADT<T> m2 = (KjedetMengde<T>) ny;
-		if (this.antall != m2.antall()) {
-			likeMengder = false;
-		} else {
-			Iterator<T> teller = m2.iterator();
-
-			//Fyll ut
-		}
-		return true;// Midlertidig
-	}
+        if (this == ny) {
+            return true;
+        }
+        if (ny == null) {
+            return false;
+        }
+        if (getClass() != ny.getClass()) {
+            return false;
+        }
+        boolean likeMengder = true;
+        MengdeADT<T> m2 = (KjedetMengde<T>) ny;
+        if (this.antall != m2.antall()) {
+            likeMengder = false;
+        } else {
+            Iterator<T> teller = m2.iterator();
+            while (teller.hasNext() && likeMengder) {
+                T element = teller.next();
+                if (!this.inneholder(element)) {
+                    likeMengder = false;
+                }
+            }
+        }
+        return likeMengder;
+    }
 
 	@Override
 	public boolean erTom() {
@@ -184,10 +191,21 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 		// TODO
 		MengdeADT<T> snittM = new KjedetMengde<T>();
 		T element;
+	    Iterator<T> teller = m2.iterator(); // den ittirerer teller for meg siden du brukter m2.iterator
+	    
+	    while(teller.hasNext()) {
+	    	element = teller.next();
+	    	
+	    	if (this.inneholder(element)) {
+	    		((KjedetMengde<T>) snittM).settInn(element);
+	    	}
+	    }
+		
+		
 		/*
 		 * Fyll ut senere
 		 * 
-		 * if (this.inneholder(element)) ((KjedetMengde<T>) snittM).settInn(element);
+		 * 
 		 */
 		return snittM;
 	}
@@ -197,10 +215,17 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 		// TODO
 		MengdeADT<T> differensM = new KjedetMengde<T>();
 		T element;
-		/*
-		 * Fyll ut senere
-		 * 
-		 */
+		
+	    Iterator<T> teller = iterator(); // teller er 'this'mengden
+	    
+	    while(teller.hasNext()) {
+	    	element = teller.next();
+	    	
+	    	if (!m2.inneholder(element)) {
+	    		differensM.leggTil(element);  
+
+	    	}
+	    }
 
 		return differensM;
 	}
@@ -209,6 +234,19 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 	public boolean undermengde(MengdeADT<T> m2) {
 		// TODO
 		boolean erUnderMengde = true;
+	    Iterator<T> teller = this.iterator();
+	    
+		if(antall > m2.antall()) {
+			return false;
+		}
+
+	    while (teller.hasNext() && erUnderMengde) {
+	        if (!m2.inneholder(teller.next())) {
+	            erUnderMengde = false;
+	        }
+	    }
+		
+
 		// ... Fyll ut senere
 		return erUnderMengde;
 	}
